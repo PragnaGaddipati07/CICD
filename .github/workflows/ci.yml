@@ -45,7 +45,7 @@ jobs:
           claims = json.loads(base64.urlsafe_b64decode(part))
           print({k: claims.get(k) for k in ("sub", "aud", "repository", "ref")})
           PY
-      - name: Configure AWS credentials
+      - name: Configure AWS credentials2
         if: github.event_name == 'push'
         uses: aws-actions/configure-aws-credentials@v4
         with:
