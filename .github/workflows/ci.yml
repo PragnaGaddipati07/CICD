@@ -26,13 +26,31 @@ jobs:
   build:
     runs-on: ubuntu-latest
     needs: test
+    permissions:
+      contents: read
+      packages: write
     steps:
       - name: Checkout code
         uses: actions/checkout@v4
+
+      -name: Set the image name
+        run: echo "IMAGE_NAME=cicd:${{ github.sha }}" >> $GITHUB_ENV
     
       - name: Build the Docker image
         run: |
           docker build -t cicd:${{ github.sha }} .
-      - name: Check image exists
+
+      -name: Login to GHCR
+        if: github.event_name == 'push'
+        uses: docker/login-action@v3
+        with:
+          registry: ghcr.io
+          username: ${{ github.actor }}
+          password: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: Push the image
+        if: github.event_name == 'push'
         run: |
-          docker images
+          docker push --all-tags $IMAGE
+
+      
