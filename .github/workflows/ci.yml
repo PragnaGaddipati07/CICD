@@ -32,7 +32,7 @@ jobs:
     steps:
       - name: Get the code
         uses: actions/checkout@v4
-            - name: Show OIDC claims (debug)
+      - name: Show OIDC claims (debug)
         if: github.event_name == 'push'
         run: |
           python3 - <<'PY'
