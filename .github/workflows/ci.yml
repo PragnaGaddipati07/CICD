@@ -34,7 +34,7 @@ jobs:
         uses: actions/checkout@v4
 
       - name: Set the image name
-        run: echo "IMAGE_NAME=cicd:${{ github.sha }}" >> $GITHUB_ENV
+        run: echo "IMAGE=ghcr.io/${GITHUB_REPOSITORY,,}" >> $GITHUB_ENV
     
       - name: Build the Docker image
         run: |
